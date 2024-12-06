@@ -8,7 +8,7 @@
 
 # This mod's tool that we want to launch.
 TOOLNAME="${1-GGXrdAdjustConnectionTiers.exe}"  # ${VARNAME-DEFAULTVALUE} substitutes DEFAULTVALUE in case the variable is empty
-PRINT_DOTNET_WARNING=$([[ -z $1 ]] && echo true || echo false)
+
 ONLY_PRINT_WINEPREFIX=false
 if [ "$2" == "--only-print-wineprefix" ]; then
   ONLY_PRINT_WINEPREFIX=true
@@ -75,10 +75,6 @@ GUILTYGEAR_WINELOADER=$(
 if [ "$GUILTYGEAR_WINELOADER" == "" ]; then
     echo "Couldn't determine Guilty Gear Xrd's WINELOADER."
     exit 1
-fi
-
-if [ $PRINT_DOTNET_WARNING == true ]; then
-  echo If the program gives error message \"You must install .NET Desktop Runtime to run this application.\" you can run the ./install_dotnet.sh to install it in the same environment Guilty Gear Xrd runs in.
 fi
 
 # The 2> /dev/null pipes stderr (error output) into nowhere.
