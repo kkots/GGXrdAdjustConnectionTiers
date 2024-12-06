@@ -397,7 +397,7 @@ DWORD followRelativeCall(const char* fileStart, const char* textSectionBegin, co
 bool parseCmpInstr(char* instrStart, const char* textSectionEnd, int* outValue, int* outSize) {
 	if (instrStart == textSectionEnd - 1) return false;
 	BYTE instr = (BYTE)*instrStart;
-	if (instr && (BYTE)*(instrStart + 1) == 0xf8) {
+	if (instr == 0x83 && (BYTE)*(instrStart + 1) == 0xf8) {
 		*outValue = (int)(*(instrStart + 2));
 		*outSize = 3;
 		return true;
