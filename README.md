@@ -45,7 +45,7 @@ You don't need to ever launch this mod again unless you want to change the ping 
 ## Usage on Linux
 
 The launcher provided (launch_GGXrdAdjustConnectionTiers_linux.sh) only works if your Steam on Linux launches Guilty Gear Xrd through Steam Proton.  
-Cd into the directory where `GGXrdAdjustConnectionTiers.exe` and `launch_GGXrdAdjustConnectionTiers_linux.sh` files are and give yourself permission to execute the .sh script:
+Cd into the directory where `GGXrdAdjustConnectionTiers_32bit.exe` and `launch_GGXrdAdjustConnectionTiers_linux.sh` files are and give yourself permission to execute the .sh script:
 
 ```bash
 cd GGXrdAdjustConnectionTiers
@@ -54,9 +54,18 @@ chmod u+x launch_GGXrdAdjustConnectionTiers_linux.sh
 ./launch_GGXrdAdjustConnectionTiers_linux.sh
 ```
 
-The .sh script will launch the app's .exe through Wine in the same virtual environment as Guilty Gear Xrd. You may then close Guilty Gear Xrd and press the **Patch GuiltyGear** button.
+The .sh script will launch the app's 32-bit .exe through Wine in the same virtual environment as Guilty Gear Xrd. You may then close Guilty Gear Xrd and press the **Patch GuiltyGear** button.
 
-Steam may start downloading 4GB of stuff and say it's validating something in this game. It will in fact not alter the patched files after it is over, and all the changes will remain.
+Running the 64-bit version of the mod will cause this error:
+
+```bash
+Application could not be started, or no application associated with the specified file.
+ShellExecuteEx failed: File not found.
+```
+
+It is caused by attempting to run a 64-bit program on a 32-bit Wine prefix. Guilty Gear Xrd is a 32-bit game and is in a 32-bit Wine prefix.
+
+After patching, Steam may start downloading 4GB of stuff and say it's validating something in this game. It will in fact not alter the patched files after it is over, and all the changes will remain.
 
 ## Undoing changes if game stopped working
 

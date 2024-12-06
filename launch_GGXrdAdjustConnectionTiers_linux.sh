@@ -7,7 +7,12 @@
 # This mod and its components do NOT require ".NET Desktop Runtime" in order to work.
 
 # This mod's tool that we want to launch.
-TOOLNAME="${1-GGXrdAdjustConnectionTiers.exe}"  # ${VARNAME-DEFAULTVALUE} substitutes DEFAULTVALUE in case the variable is empty
+TOOLNAME="${1-GGXrdAdjustConnectionTiers_32bit.exe}"  # ${VARNAME-DEFAULTVALUE} substitutes DEFAULTVALUE in case the variable is empty
+# Running the 64-bit (unsuffixed) version of the mod will cause this error:
+# >Application could not be started, or no application associated with the specified file.
+# >ShellExecuteEx failed: File not found.
+# It is caused by attempting to run a 64-bit program on a 32-bit Wine prefix. Guilty Gear Xrd is a 32-bit game and is in a 32-bit Wine prefix.
+# To tell if a Wineprefix is 64-bit or 32-bit, check the existence of $WINEPREFIX/drive_c/windows/syswow64. If that exists, it's 64-bit.
 
 ONLY_PRINT_WINEPREFIX=false
 if [ "$2" == "--only-print-wineprefix" ]; then
