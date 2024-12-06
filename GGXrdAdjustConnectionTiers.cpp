@@ -369,13 +369,13 @@ LRESULT CALLBACK NewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			//    Commented Dec 2, 2016 at 16:37
 			//    https://stackoverflow.com/questions/10127054/select-all-text-in-edit-contol-by-clicking-ctrla
 
-            SendMessage(hWnd, EM_SETSEL, 0, -1);
+            SendMessageW(hWnd, EM_SETSEL, 0, -1);
     		return 0;
 		}
 	}
 	break;
 	}
-	return CallWindowProc(OldWndProc, hWnd, message, wParam, lParam);
+	return CallWindowProcW(OldWndProc, hWnd, message, wParam, lParam);
 }
 
 //
@@ -421,10 +421,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if ((HWND)lParam == hWndT4UpperLimitInclusive) {
 				if (antiInfiniteLoop) break;
 				currentPingValues[4] = 0;
-				parsePingValue((HWND)lParam, pingFieldName[4], &currentPingValues[4], hWnd, true);
-				antiInfiniteLoop = true;
-				updateOtherPingFields(4);
-				antiInfiniteLoop = false;
+				if (parsePingValue((HWND)lParam, pingFieldName[4], &currentPingValues[4], hWnd, true)) {
+					antiInfiniteLoop = true;
+					updateOtherPingFields(4);
+					antiInfiniteLoop = false;
+        		}
 				break;
 			}
 			int i;
@@ -432,10 +433,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if ((HWND)lParam == hWndTNUpperLimitInclusive[i]) {
 					if (antiInfiniteLoop) break;
 					currentPingValues[i + 1] = 0;
-					parsePingValue((HWND)lParam, pingFieldName[i + 1], &currentPingValues[i + 1], hWnd, true);
-					antiInfiniteLoop = true;
-					updateOtherPingFields(i + 1);
-					antiInfiniteLoop = false;
+					if (parsePingValue((HWND)lParam, pingFieldName[i + 1], &currentPingValues[i + 1], hWnd, true)) {
+						antiInfiniteLoop = true;
+						updateOtherPingFields(i + 1);
+						antiInfiniteLoop = false;
+        			}
 					break;
 				}
 			}
@@ -536,18 +538,19 @@ HANDLE findOpenGgProcess(bool* foundButFailedToOpen) {
 bool findGgInstallPath(std::wstring& path) {
 	
 	if (!ggProcessModulePath.empty()) {
+		std::wstring tmpPath = ggProcessModulePath;
 		for (int i = 0; i < 3; ++i) {
-			int pos = findCharRevW(ggProcessModulePath.c_str(), L'\\');
+			int pos = findCharRevW(tmpPath.c_str(), L'\\');
 			if (pos < 1) {
 				break;
 			}
-			if (pos > 0 && (ggProcessModulePath[pos - 1] == L'\\' || ggProcessModulePath[pos - 1] == L':')) {
+			if (pos > 0 && (tmpPath[pos - 1] == L'\\' || tmpPath[pos - 1] == L':')) {
 				break;
 			}
-			ggProcessModulePath.resize(pos);
+			tmpPath.resize(pos);
 		}
-		if (!ggProcessModulePath.empty()) {
-			path = ggProcessModulePath;
+		if (!tmpPath.empty()) {
+			path = tmpPath;
 			return true;
 		}
 		return false;
@@ -695,11 +698,6 @@ bool validateInstallPath(std::wstring& path) {
 	if (!fileExists(subPath.c_str())) {
 		return false;
 	}
-	
-	subPath = pathFixed + L"REDGame\\CookedPCConsole\\REDGame.upk";
-	if (!fileExists(subPath.c_str())) {
-		return false;
-	}
 
 	return true;
 
@@ -833,7 +831,7 @@ void fillInInitialValues() {
 			installPath.clear();
 		}
 		if (!validateInstallPath(installPath)) {
-			MessageBoxW(mainWindow, L"Could not locate REDGame\\CookedPCConsole\\REDGame.upk and Binaries\\Win32\\GuiltyGearXrd.exe in the"
+			MessageBoxW(mainWindow, L"Could not locate Binaries\\Win32\\GuiltyGearXrd.exe in the"
 				" selected folder. Please select another folder and try again.", ERROR_STR, MB_OK);
 			installPath.clear();
 		}
@@ -939,6 +937,15 @@ bool parsePingValue(HWND hwnd, const wchar_t* name, int* outPing, HWND mainWindo
 		}
 		return false;
 	}
+	if (parsedInt == 999) {
+		if (!silenceErrors) {
+			errorStr = L"In the ping value for ";
+			errorStr += name;
+			errorStr += L" is 999, which is not allowed.";
+			MessageBoxW(mainWindow, errorStr.c_str(), ERROR_STR, MB_OK);
+		}
+		return false;
+	}
 	if (outPing) *outPing = parsedInt;
 	return true;
 }
@@ -1001,7 +1008,7 @@ void handlePatchButton() {
 			installPath.clear();
 		}
 		if (!validateInstallPath(installPath)) {
-			MessageBoxW(mainWindow, L"Could not locate REDGame\\CookedPCConsole\\REDGame.upk and Binaries\\Win32\\GuiltyGearXrd.exe in the"
+			MessageBoxW(mainWindow, L"Could not locate Binaries\\Win32\\GuiltyGearXrd.exe in the"
 				" selected folder. Please select another folder and try again.", ERROR_STR, MB_OK);
 			installPath.clear();
 		}

@@ -742,7 +742,7 @@ bool overwriteFunction(HWND mainWindow, char* funcPtr, char* textSectionEnd, int
         return false;
 	}
 	bool nothingWasChanged = false;
-	int positionToWriteFrom = funcPtr - wholeFileBegin;
+	int positionToWriteFrom = (int)(funcPtr - wholeFileBegin);
 	size_t sizeToWrite = 0;
 	if (funcData.size() < oldFuncSize) {
 		nothingWasChanged = memcmp(funcPtr, funcData.data(), funcData.size()) == 0;
