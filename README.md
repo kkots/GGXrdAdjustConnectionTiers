@@ -3,7 +3,7 @@
 ![Screenshot can't be viewed](demo.jpg)
 
 Changes connection tiers (T4, T3, T2, T1 and T0) in Guilty Gear Xrd -REVELATOR- Rev2 version 2211 (works as of 6'th December 2024).  
-This affects the listing of 'Friend'/'Player'/'Private' (same thing called different names) lobbies (see screenshot above), the filtered results of those lobbies (same screenshot), and the connection tier icon next to a player's name when inside a 'Friend' lobby (see screenshot below)
+This affects the listing of 'Friend'/'Player'/'Private' (same thing called different names) lobbies (see screenshot above), the filtering of 'Friend' lobbies based on pings (same screenshot), and the connection tier icon next to a player's name when inside a 'Friend' lobby (see screenshot below)
 
 ![Screenshot can't be viewed](demo2.png)
 

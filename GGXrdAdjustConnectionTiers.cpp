@@ -9,7 +9,6 @@
 #include <Shlobj.h> // for CLSID_FileOpenDialog
 #include <atlbase.h> // for CComPtr
 #include <vector>
-#include <algorithm>
 #include <string>
 #include <Psapi.h>
 #include <VersionHelpers.h>
