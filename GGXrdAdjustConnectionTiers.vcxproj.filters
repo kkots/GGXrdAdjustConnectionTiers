@@ -71,7 +71,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="launch_GGXrdAdjustConnectionTiers_linux.sh" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="launch_GGXrdAdjustConnectionTiers_linux.sh" />
   </ItemGroup>
 </Project>

@@ -151,7 +151,10 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="launch_GGXrdAdjustConnectionTiers_linux.sh" />
+    <CopyFileToFolders Include="launch_GGXrdAdjustConnectionTiers_linux.sh">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

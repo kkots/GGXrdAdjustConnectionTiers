@@ -215,7 +215,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	
 	addTextRow(L"This affects the listing of 'Friend'/'Player'/'Private' (same thing called different names) lobbies,");
 	
-	addTextRow(L"the filtered results of those lobbies, and the connection tier");
+	addTextRow(L"the filtering of those lobbies based on ping, and the connection tier");
 	
 	addTextRow(L"icon next to a player's name when inside a 'Friend' lobby (may also affect player icons in other");
 	
