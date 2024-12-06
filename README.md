@@ -1,4 +1,4 @@
-# GGXrdMirrorColorSelect
+# GGXrdAdjustConnectionTiers
 
 ![Screenshot can't be viewed](demo.jpg)
 
