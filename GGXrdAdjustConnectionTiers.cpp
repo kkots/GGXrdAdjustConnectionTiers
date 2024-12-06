@@ -1022,7 +1022,7 @@ void handlePatchButton() {
 	std::wstring remarks;
 	if (!performExePatching(installPath + L"Binaries\\Win32\\GuiltyGearXrd.exe", remarks, mainWindow,
 			SendMessageW(hWndBackupCheckbox, BM_GETCHECK, 0, 0) == BST_CHECKED ? false : true,
-			currentPingValues)) {
+			currentPingValues, std::wstring())) {
 		return;
 	}
 	std::vector<std::wstring> remarksLines = split(remarks, L'\n');

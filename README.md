@@ -1,9 +1,13 @@
 # GGXrdAdjustConnectionTiers
 
-![Screenshot can't be viewed](demo.jpg)
+![Screenshot can't be viewed](how_ui_looks.png)
 
 Changes connection tiers (T4, T3, T2, T1 and T0) in Guilty Gear Xrd -REVELATOR- Rev2 version 2211 (works as of 6'th December 2024).  
-This affects the listing of 'Friend'/'Player'/'Private' (same thing called different names) lobbies (see screenshot above), the filtering of 'Friend' lobbies based on pings (same screenshot), and the connection tier icon next to a player's name when inside a 'Friend' lobby (see screenshot below)
+This affects the listing of 'Friend'/'Player'/'Private' (same thing called different names) lobbies (see screenshot below),
+
+![Screenshot can't be viewed](demo.jpg)
+
+, the filtering of 'Friend' lobbies based on pings (same screenshot), and the connection tier icon next to a player's name when inside a 'Friend' lobby (see screenshot below).
 
 ![Screenshot can't be viewed](demo2.png)
 
@@ -16,6 +20,18 @@ The default ping thresholds that the game uses are:
 - 101 to 200ms - **T2**;
 - 201 to 300ms - **T1**;
 - \>300ms - **T0**.
+
+## How this mod affects room/player filtering based on connection level
+
+This mod affects how the lobbies are filtered on your end based on 'Search Room - Room Connection Restrictions' you select when you **search** for a room.
+
+When you **create** a room and set its 'Room Connection Restrictions', the people who use this mod may still be able to join with a bad connection, because the decision whether they can join is made on *their* client's end using the ping, the modded connection tier values that *they* have, and the connection restriction that you set for you room. In other words:
+
+`CAN_JOIN = ( CALCULATE_CONNECTION_TIER(PING) >= ROOMS_CONNECTION_RESTRICTION )`
+
+^ this happens on the **joining** player's client side.
+
+Same happens when you try to join other people's rooms. You may join connection level-restricted rooms while having a bad ping, by changing your connection tiers using this mod, so that the `tier` that you calculate on *your* side is `>=` the `required connection tier` of a room.
 
 ## Usage on Windows
 
