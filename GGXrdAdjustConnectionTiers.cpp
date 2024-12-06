@@ -1018,6 +1018,7 @@ void handlePatchButton() {
 	}
 
 	// Patch GuiltyGearXrd.exe.
+	somethingWentWrongWhenPatching = false;
 	std::wstring remarks;
 	if (!performExePatching(installPath + L"Binaries\\Win32\\GuiltyGearXrd.exe", remarks, mainWindow,
 			SendMessageW(hWndBackupCheckbox, BM_GETCHECK, 0, 0) == BST_CHECKED ? false : true,
