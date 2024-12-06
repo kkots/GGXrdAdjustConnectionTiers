@@ -799,9 +799,7 @@ bool overwriteFunction(HWND mainWindow, char* funcPtr, char* textSectionEnd, int
 	return true;
 }
 
-static std::wstring backupFilePath;
-
-bool performExePatching(const std::wstring& szFile, std::wstring& importantRemarks, HWND mainWindow, bool mayCreateBackup, int* newPings) {
+bool performExePatching(const std::wstring& szFile, std::wstring& importantRemarks, HWND mainWindow, bool mayCreateBackup, int* newPings, std::wstring backupFilePath) {
     std::wstring fileName = getFileName(szFile);
 
 	// Even if we're not modifying the file right away, we're still opening with the write access to check for the rights
@@ -867,7 +865,6 @@ bool performExePatching(const std::wstring& szFile, std::wstring& importantRemar
 	char* rdataSectionBegin = wholeFileBegin + rdataSection->rawAddress;
 	char* rdataSectionEnd = wholeFileBegin + rdataSection->rawAddress + rdataSection->rawSize;
 	
-	static bool isFirstRunOutOfARecursiveSeriesOfCalls = true;
 	if (mayCreateBackup) {
 		
 		fclose(file);
@@ -878,6 +875,9 @@ bool performExePatching(const std::wstring& szFile, std::wstring& importantRemar
 
 		if (!CopyFileW(szFile.c_str(), backupFilePath.c_str(), false)) {
 			WinError winErr;
+			importantRemarks += L"Failed to create backup copy: ";
+			importantRemarks += winErr.getMessage();
+			importantRemarks += L"\n";
 			int response = MessageBoxW(mainWindow, (L"Failed to create a backup copy of " + fileName + L" ("
 				+ backupFilePath + L"): " + winErr.getMessage() +
 				L"Do you want to continue anyway? You won't be able to revert the file to the original. Press OK to agree.\n").c_str(),
@@ -885,17 +885,14 @@ bool performExePatching(const std::wstring& szFile, std::wstring& importantRemar
 			if (response != IDOK) {
 				return false;
 			}
+			backupFilePath.clear();
 		} else {
 			dout << "Backup copy created successfully.\n";
 			importantRemarks += fileName + L" has been backed up to " + backupFilePath + L"\n";
 		}
-		isFirstRunOutOfARecursiveSeriesOfCalls = false;
-		return performExePatching(szFile, importantRemarks, mainWindow, false, newPings);
-	} else if (isFirstRunOutOfARecursiveSeriesOfCalls) {
+		return performExePatching(szFile, importantRemarks, mainWindow, false, newPings, backupFilePath);
+	} else if (backupFilePath.empty()) {
 		importantRemarks += L"No backup copy is created.\n";
-		backupFilePath.clear();
-	} else {
-		isFirstRunOutOfARecursiveSeriesOfCalls = true;
 	}
 	
 	char* func1Ptr;

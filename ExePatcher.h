@@ -24,5 +24,6 @@ bool obtainValuesFromExe(const std::wstring& szFile, PingValues* outValues, std:
 /// <param name="mayCreateBackup">true if the function is allowed to perform backup copies of the .exe in case it is not yet patched
 /// and a patch application is due.</param>
 /// <param name="newPings">an array of 5 integers representing the ping values for T0, T1, T2, T3 and T4 respectively.</param>
+/// <param name="backupFilePath">is the backup path to be used by the function. If you pass this, mayCreateBackup must be false.</param>
 /// <returns>true on successful patch or if patch is already in place, false on error or cancellation.</returns>
-bool performExePatching(const std::wstring& szFile, std::wstring& importantRemarks, HWND mainWindow, bool mayCreateBackup, int* newPings);
+bool performExePatching(const std::wstring& szFile, std::wstring& importantRemarks, HWND mainWindow, bool mayCreateBackup, int* newPings, std::wstring backupFilePath);
