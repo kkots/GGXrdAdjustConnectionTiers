@@ -11,7 +11,9 @@ This affects the listing of 'Friend'/'Player'/'Private' (same thing called diffe
 
 ![Screenshot can't be viewed](demo2.png)
 
-It is unknown whether this affects World Lobbies or Ranked Match - not tested.
+What this mod does **NOT** affect: other people joining your room with a bad connection.
+
+It is unknown whether the mod affects World Lobbies or Ranked Match - not tested.
 
 The default ping thresholds that the game uses are:
 
